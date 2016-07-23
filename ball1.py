@@ -3,6 +3,7 @@ import Tkinter
 def button1_command():
     print('Button 1 default command')
 
+
 def print_hello(event):
     #print(event.char)
     #print(event.keycode)
@@ -19,13 +20,32 @@ def print_hello(event):
         raise ValueError()
 
 
+def init_main_window():
+    global root, button1, button2, label, text, scale
 
-root = Tkinter.Tk()
+    root = Tkinter.Tk()
 
-button1 = Tkinter.Button(root, text="Button 1", command=button1_command)
-button1.pack()
+    button1 = Tkinter.Button(root, text="Button 1", command=button1_command)
+    button1.pack()
+    button2 = Tkinter.Button(root, text="Button 2")
+    button2.bind("<Button>",print_hello)
+    button2.pack()
 
-button2 = Tkinter.Button(root, text="Button 2")
-button2.bind("<Button>",print_hello)
-button2.pack()
-root.mainloop()
+    variable = Tkinter.IntVar()
+    label = Tkinter.Label(root, text=variable)
+    scale = Tkinter.Scale(root, orient=Tkinter.HORIZONTAL, lenght=300,
+                          from_=0, to=100, tickinterval=10, resoluyion=5)
+    text = Tkinter.Entry(root, textvariable=variable)
+
+    for obj in button1, button2, label, scale, text:
+        obj.pack()
+    label.pack()
+    scale.pack()
+    text.pack()
+
+
+
+if __name__ == "_main_":
+    init_main_window()
+
+    root.mainloop()
